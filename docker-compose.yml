@@ -1,0 +1,26 @@
+version: "3.2"
+services:
+  code-server-dind:
+    image: hub.pi-farm.home64.de/code-server-dind
+    privileged: true
+    networks:
+      - swarm-net
+    environment:
+      - DOCKER_USER=coder
+    volumes:
+      - /media/pi/usb_hd/_dev/coder/.local:/root/.local
+      - /media/pi/usb_hd/_dev/coder/.config:/root/.config
+      - /media/pi/usb_hd/_dev/coder/project:/root/project
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9876:8080
+    stdin_open: true
+    tty: true
+    command: bash
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==pi-05"
+networks:
+  swarm-net:
+    external: true
