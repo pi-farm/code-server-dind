@@ -4,7 +4,10 @@ RUN apt-get update \
     && ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
     && dpkg-reconfigure -f noninteractive tzdata \
     && apt-get install -yq git-all \
-    && curl -fsSL https://code-server.dev/install.sh | sh
+    && curl -fsSL https://code-server.dev/install.sh | sh \
+    && apt-get autoremove -y \
+    && rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/*
 EXPOSE 8080
 VOLUME /root/.local
 VOLUME /root/.config
